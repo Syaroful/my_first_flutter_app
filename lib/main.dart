@@ -27,7 +27,7 @@ class MyHomePage extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Flutter App'),
         ),
-        body: TextInputWidget());
+        body: const TextInputWidget());
   }
 }
 
@@ -70,8 +70,15 @@ class _TextInputWidgetState extends State<TextInputWidget> {
           ),
           onChanged: (text) => changeText(text),
         ),
-        Text(
-          text,
+        const SizedBox(height: 100),
+        Center(
+          child: Text(
+            text,
+            style: const TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         )
       ],
     );
