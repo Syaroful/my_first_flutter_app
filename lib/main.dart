@@ -24,26 +24,56 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Flutter App'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TestWidget(),
-            TestWidget(),
-            TestWidget(),
-          ],
+        appBar: AppBar(
+          title: const Text('Flutter App'),
         ),
-      ),
-    );
+        body: TextInputWidget());
   }
 }
 
-class TestWidget extends StatelessWidget {
+class TextInputWidget extends StatefulWidget {
+  const TextInputWidget({super.key});
+
+  @override
+  State<TextInputWidget> createState() => _TextInputWidgetState();
+}
+
+class _TextInputWidgetState extends State<TextInputWidget> {
+  final controller = TextEditingController();
+  String text = "";
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
+  void changeText(text) {
+    if (text == "kasar") {
+      controller.clear();
+      text = "";
+    }
+    setState(() {
+      this.text = text;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Text('HeLLo WoRld');
+    return Column(
+      children: [
+        TextField(
+          controller: controller,
+          decoration: const InputDecoration(
+            prefixIcon: Icon(Icons.account_circle_rounded),
+            labelText: "gak boleh ngetik 'kasar'",
+          ),
+          onChanged: (text) => changeText(text),
+        ),
+        Text(
+          text,
+        )
+      ],
+    );
   }
 }
