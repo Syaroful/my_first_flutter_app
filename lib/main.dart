@@ -20,8 +20,21 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  String text = "";
+
+  void changeText(String text) {
+    setState(() {
+      text = text;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +42,21 @@ class MyHomePage extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Flutter App'),
         ),
-        body: const TextInputWidget());
+        body: Column(
+          children: [
+            TextInputWidget(changeText),
+            Text(
+              text,
+            ),
+          ],
+        ));
   }
 }
 
 class TextInputWidget extends StatefulWidget {
-  const TextInputWidget({super.key});
+  final Function(String) callback;
+
+  const TextInputWidget(this.callback, {super.key});
 
   @override
   State<TextInputWidget> createState() => _TextInputWidgetState();
@@ -42,7 +64,6 @@ class TextInputWidget extends StatefulWidget {
 
 class _TextInputWidgetState extends State<TextInputWidget> {
   final controller = TextEditingController();
-  String text = "";
 
   @override
   void dispose() {
@@ -50,39 +71,25 @@ class _TextInputWidgetState extends State<TextInputWidget> {
     controller.dispose();
   }
 
-  void changeText(text) {
-    if (text == "kasar") {
-      controller.clear();
-      text = "";
-    }
-    setState(() {
-      this.text = text;
-    });
+  void click() {
+    widget.callback(controller.text);
+    controller.clear();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TextField(
-          controller: controller,
-          decoration: const InputDecoration(
-            prefixIcon: Icon(Icons.account_circle_rounded),
-            labelText: "gak boleh ngetik 'kasar'",
-          ),
-          onChanged: (text) => changeText(text),
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        prefixIcon: const Icon(Icons.account_circle_rounded),
+        labelText: "gak boleh ngetik 'kasar'",
+        suffixIcon: IconButton(
+          splashColor: Colors.yellow,
+          icon: const Icon(Icons.send),
+          tooltip: "Post",
+          onPressed: click,
         ),
-        const SizedBox(height: 100),
-        Center(
-          child: Text(
-            text,
-            style: const TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        )
-      ],
+      ),
     );
   }
 }
