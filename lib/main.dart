@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
           title: const Text('Flutter App'),
         ),
         body: Column(
-          children: [
+          children: <Widget>[
             TextInputWidget(changeText),
             Text(
               text,
@@ -82,12 +82,12 @@ class _TextInputWidgetState extends State<TextInputWidget> {
       controller: controller,
       decoration: InputDecoration(
         prefixIcon: const Icon(Icons.account_circle_rounded),
-        labelText: "gak boleh ngetik 'kasar'",
+        labelText: "Type Something",
         suffixIcon: IconButton(
           splashColor: Colors.yellow,
           icon: const Icon(Icons.send),
           tooltip: "Post",
-          onPressed: click,
+          onPressed: this.click,
         ),
       ),
     );
