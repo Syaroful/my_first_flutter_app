@@ -32,7 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void changeText(String text) {
     setState(() {
-      text = text;
+      this.text = text;
     });
   }
 
@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
           title: const Text('Flutter App'),
         ),
         body: Column(
-          children: [
+          children: <Widget>[
             TextInputWidget(changeText),
             Text(
               text,
@@ -56,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
 class TextInputWidget extends StatefulWidget {
   final Function(String) callback;
 
-  const TextInputWidget(this.callback, {super.key});
+  TextInputWidget(this.callback);
 
   @override
   State<TextInputWidget> createState() => _TextInputWidgetState();
@@ -81,12 +81,12 @@ class _TextInputWidgetState extends State<TextInputWidget> {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.account_circle_rounded),
-        labelText: "gak boleh ngetik 'kasar'",
+        prefixIcon: const Icon(Icons.message),
+        labelText: "Type something here",
         suffixIcon: IconButton(
-          splashColor: Colors.yellow,
           icon: const Icon(Icons.send),
-          tooltip: "Post",
+          splashColor: Colors.brown,
+          tooltip: "post message",
           onPressed: click,
         ),
       ),
